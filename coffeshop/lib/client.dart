@@ -1,7 +1,5 @@
 class Client{
-  String? name;
-  String? lastname;
-
-  Client({this.name, this.lastname});
-
+  String name;
+  String lastname;
+  Client({required this.name, required this.lastname});
 }

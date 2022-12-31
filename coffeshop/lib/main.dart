@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'client.dart';
+import "ClientWidget.dart";
 
 void main() {
   runApp(MaterialApp(
@@ -60,6 +61,10 @@ class Login extends StatelessWidget {
   }
 }
 
+
+
+
+
 class DataWidget extends StatefulWidget {
   const DataWidget({super.key});
 
@@ -73,7 +78,11 @@ class _DataWidgetState extends State<DataWidget> {
     Client(name: "Juan", lastname: "Perez"),
     Client(name: "David", lastname: "Andrade"),
     Client(name: "Lucas", lastname: "Vasquez"),
+    // Client(name: "Alex", lastname: "Benalcazar"),
   ];
+
+
+
 
 
   Widget ClientTemplate(client) {
@@ -110,6 +119,9 @@ class _DataWidgetState extends State<DataWidget> {
             // )
             Column(
               children: clients.map((client) => ClientTemplate(client)).toList(),
+            ),
+            Column(
+              children: clients.map((client) => ClientWidget(client: client)).toList(),
             ),
 
           ]
