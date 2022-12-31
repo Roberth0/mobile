@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
+import 'client.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -68,6 +69,29 @@ class DataWidget extends StatefulWidget {
 
 class _DataWidgetState extends State<DataWidget> {
   int counter = 0;
+  List<Client> clients = [
+    Client(name: "Juan", lastname: "Perez"),
+    Client(name: "David", lastname: "Andrade"),
+    Client(name: "Lucas", lastname: "Vasquez"),
+  ];
+
+
+  Widget ClientTemplate(client) {
+    return Card(
+      margin: EdgeInsets.all(15),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+          Text(client.name, style: TextStyle(fontSize: 28, color: Colors.indigo)),
+          SizedBox(width: 20,),
+          Text(client.lastname, style: TextStyle(fontSize: 24, color: Colors.green)),
+        ]),
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +103,15 @@ class _DataWidgetState extends State<DataWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text("$counter", style: TextStyle(fontSize: 32, color: Colors.indigo[800])),
+            // Column(
+            //   children: clients.map((client) => Text('${client.name} - ${client.lastname}',
+            //     style: TextStyle(fontSize: 28, color: Colors.deepOrangeAccent),
+            //   )).toList(),
+            // )
+            Column(
+              children: clients.map((client) => ClientTemplate(client)).toList(),
+            ),
+
           ]
         ),
       ),
@@ -92,3 +125,4 @@ class _DataWidgetState extends State<DataWidget> {
     );
   }
 }
+
