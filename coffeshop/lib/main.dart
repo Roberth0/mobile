@@ -81,9 +81,9 @@ class _DataWidgetState extends State<DataWidget> {
     // Client(name: "Alex", lastname: "Benalcazar"),
   ];
 
+  void deleteClient(Client client){
 
-
-
+  }
 
   Widget ClientTemplate(client) {
     return Card(
@@ -117,11 +117,18 @@ class _DataWidgetState extends State<DataWidget> {
             //     style: TextStyle(fontSize: 28, color: Colors.deepOrangeAccent),
             //   )).toList(),
             // )
+            // Column(
+            //   children: clients.map((client) => ClientTemplate(client)).toList(),
+            // ),
             Column(
-              children: clients.map((client) => ClientTemplate(client)).toList(),
-            ),
-            Column(
-              children: clients.map((client) => ClientWidget(client: client)).toList(),
+              children: clients.map((client) => ClientWidget(
+                  client: client,
+                  delete: () {
+                    setState((){
+                    clients.remove(client);
+                   });
+                  },
+              )).toList(),
             ),
 
           ]
