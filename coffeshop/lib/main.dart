@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:coffeshop/screens/wrapper.dart';
+import 'package:coffeshop/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +21,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Wrapper(),
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
+    return StreamProvider<User?>.value(
+      initialData: null,
+      value: AuthService().user,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Wrapper(),
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+        ),
       ),
     );
   }

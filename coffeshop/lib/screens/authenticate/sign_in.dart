@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
+import 'package:coffeshop/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,6 +12,9 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,18 +66,25 @@ class _SignInState extends State<SignIn> {
                 SizedBox(
                   height: 40,
                 ),
-                Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 213, 95, 4),
-                    borderRadius: BorderRadius.circular(5),
+                GestureDetector(
+                  onTap: () async {
+                    dynamic result = await _auth.signInAnon();
+                    if (result == null) return;
+                    print(result);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 213, 95, 4),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                        child: Text(
+                      'Sign In',
+                      style:
+                          GoogleFonts.lexend(fontSize: 24, color: Colors.white),
+                    )),
                   ),
-                  child: Center(
-                      child: Text(
-                    'Sign In',
-                    style:
-                        GoogleFonts.lexend(fontSize: 24, color: Colors.white),
-                  )),
                 ),
                 SizedBox(
                   height: 18,
