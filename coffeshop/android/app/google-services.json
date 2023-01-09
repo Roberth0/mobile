@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "975829412204",
+    "project_id": "coffe-app-dc390",
+    "storage_bucket": "coffe-app-dc390.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975829412204:android:0d568c6054cb925b0a2b49",
+        "android_client_info": {
+          "package_name": "com.example.coffeshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975829412204-avbk7nsbm8ma4rl9fp5nq2fmku25cvum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_k_zjzn5W9fnryyHPGB1Tk7GqNDDbQ-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975829412204-avbk7nsbm8ma4rl9fp5nq2fmku25cvum.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "975829412204-0u47gdu880ouvc9j3e4q9rib98c6rqfk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.coffeshop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
