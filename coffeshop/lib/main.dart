@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
-import 'package:coffeshop/screens/wrapper.dart';
+import 'package:coffeshop/screens/splash/splash.dart';
 import 'package:coffeshop/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Wrapper(),
+        home: SplashScreen(),
         theme: ThemeData(
           primarySwatch: Colors.orange,
         ),

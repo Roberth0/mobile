@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:coffeshop/screens/authenticate/sign_in.dart';
+import 'package:coffeshop/screens/authenticate/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatefulWidget {
@@ -11,8 +12,18 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> {
+  bool showSignIn = true;
+
+  void toggleState() {
+    setState(() {
+      showSignIn = !showSignIn;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SignIn();
+    return showSignIn
+        ? SignIn(toggleView: toggleState)
+        : SignUp(toggleView: toggleState);
   }
 }

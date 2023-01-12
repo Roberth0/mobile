@@ -1,11 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print, use_build_context_synchronously
 
 import 'package:coffeshop/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:email_validator/email_validator.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  final Function()? toggleView;
+  const SignIn({super.key, this.toggleView});
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -14,6 +16,11 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+
+  String email = "";
+  String password = "";
+  String error = "";
+  bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,58 +41,104 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 SizedBox(height: 50),
-                TextField(
-                  decoration: InputDecoration(
-                    // prefixIcon: Icon(Icons.email),
-                    hintText: 'Email or Phone number',
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: const Color(0xffc4c4c4)),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    // prefixIcon: Icon(Icons.email),
-                    suffixIcon: Icon(Icons.visibility),
-                    hintText: 'Password',
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: const Color(0xffc4c4c4)),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    dynamic result = await _auth.signInAnon();
-                    if (result == null) return;
-                    print(result);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 213, 95, 4),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Center(
-                        child: Text(
-                      'Sign In',
-                      style:
-                          GoogleFonts.lexend(fontSize: 24, color: Colors.white),
+                Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextFormField(
+                          // validator: (val) => (val?.isEmpty ?? true)
+                          validator: (val) {
+                            bool isValid = false;
+                            if (val != null) {
+                              isValid = EmailValidator.validate(val);
+                            }
+                            return isValid ? null : "Enter a valid email val";
+                          },
+                          onChanged: (val) {
+                            setState(() {
+                              email = val;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            // prefixIcon: Icon(Icons.email),
+                            hintText: 'Email or Phone number',
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide:
+                                  BorderSide(color: const Color(0xffc4c4c4)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        TextFormField(
+                          validator: (val) => val!.length < 4
+                              ? "Enter a password 4+ long"
+                              : null,
+                          onChanged: (val) {
+                            setState(() {
+                              password = val;
+                            });
+                          },
+                          obscureText: _passwordVisible,
+                          decoration: InputDecoration(
+                            // prefixIcon: Icon(Icons.email),
+                            suffixIcon: IconButton(
+                              icon: _passwordVisible
+                                  ? Icon(Icons.visibility)
+                                  : Icon(Icons.visibility_off),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                            ),
+                            hintText: 'Password',
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide:
+                                  BorderSide(color: const Color(0xffc4c4c4)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll<Color>(
+                                        Color.fromARGB(255, 213, 95, 4))),
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  });
+                              if (_formKey.currentState!.validate()) {
+                                dynamic result =
+                                    await _auth.signIn(email, password);
+                                if (result == "null") {
+                                  setState(() => error =
+                                      "Email and/or Password not valid");
+                                }
+                              }
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Sign In",
+                                style: GoogleFonts.lexend(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400)))
+                      ],
                     )),
-                  ),
-                ),
                 SizedBox(
                   height: 18,
                 ),
@@ -95,10 +148,12 @@ class _SignInState extends State<SignIn> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      'Sign Up',
-                      style: GoogleFonts.lexend(
-                          color: Color.fromARGB(255, 213, 95, 4)),
+                    TextButton(
+                      onPressed: widget.toggleView,
+                      child: Text("Sign Up",
+                          style: GoogleFonts.lexend(
+                            color: Color.fromARGB(255, 203, 90, 4),
+                          )),
                     )
                   ],
                 ),
