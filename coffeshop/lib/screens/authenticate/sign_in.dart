@@ -53,7 +53,7 @@ class _SignInState extends State<SignIn> {
                             if (val != null) {
                               isValid = EmailValidator.validate(val);
                             }
-                            return isValid ? null : "Enter a valid email val";
+                            return isValid ? null : "Enter a valid email";
                           },
                           onChanged: (val) {
                             setState(() {
