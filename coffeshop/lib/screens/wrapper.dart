@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:coffeshop/screens/authenticate/authenticate.dart';
-import 'package:coffeshop/screens/home/home.dart';
+import 'package:coffeshop/screens/home/user_home.dart';
 import 'package:coffeshop/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
     // return Profile();
-    return Home();
+    return UserHome();
 
     // return user == null ? Authenticate() : Home();
   }
