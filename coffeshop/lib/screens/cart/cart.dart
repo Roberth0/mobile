@@ -11,7 +11,7 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("Cart")),
+      body: Center(child: Text("Cart", style: TextStyle(fontSize: 32))),
     );
   }
 }

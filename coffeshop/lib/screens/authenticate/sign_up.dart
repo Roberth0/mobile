@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
+import 'package:coffeshop/services/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,7 @@ class _SignUpState extends State<SignUp> {
   String lastname = "";
   String email = "";
   String password = "";
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +33,14 @@ class _SignUpState extends State<SignUp> {
                 Positioned(
                     top: 30,
                     right: 0,
-                    child: Container(child: Image.asset('images/elipse5.png'))
-                ),
-
+                    child: Image.asset('images/elipse5.png')),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15.0, 140, 15, 0),
                   child: Form(
                     key: _formKey,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
+                        children: <Widget>[
                           Center(
                             child: Text(
                               'Sing Up',
@@ -51,32 +51,29 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           SizedBox(height: 50),
-
                           Container(
                             decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5)
-                                ),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5)),
                             child: TextFormField(
                               validator: (value) => value!.isEmpty
                                   ? "Enter a correct value"
                                   : null,
-                              onChanged: (val) => setState(() { name = val; }),
+                              onChanged: (val) => setState(() {
+                                name = val;
+                              }),
                               decoration: InputDecoration(
                                 hintText: "Name",
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(color: Colors.grey)
-                                    ),
+                                    borderSide: BorderSide(color: Colors.grey)),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(color: Colors.grey)
-                                    ),
+                                    borderSide: BorderSide(color: Colors.grey)),
                               ),
                             ),
                           ),
                           SizedBox(height: 20),
-
                           TextFormField(
                             validator: (value) =>
                                 value!.isEmpty ? "Enter a correct value" : null,
@@ -94,7 +91,6 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           SizedBox(height: 20),
-
                           TextFormField(
                             validator: (val) {
                               bool isValid = false;
@@ -117,7 +113,6 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           SizedBox(height: 20),
-
                           TextFormField(
                             validator: (val) {
                               return val!.length > 6
@@ -150,42 +145,47 @@ class _SignUpState extends State<SignUp> {
                           ),
                           SizedBox(height: 40),
 
+                          if (error.isNotEmpty) ...[Center(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                              child: Text(error, style: TextStyle(color: Colors.red)),
+                            ),
+                          )],
+
+                          // Text(error.isNotEmpty ? error : "",
+                          //     style: TextStyle(color: Colors.red)),
+
                           ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStatePropertyAll<Color>(
                                           Color.fromARGB(255, 213, 95, 4))),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  dynamic result = 'Valid form';
+                                  dynamic result = await AuthService()
+                                      .signUp(email, password);
                                   if (result == "null") {
-                                    print("invalid data");
+                                    error = "Something gone wrong! Try again.";
+                                    print("Invalid data");
                                   }
                                 }
-                                print("Registrar");
                               },
                               child: Text("Sign Up",
                                   style: GoogleFonts.lexend(
-                                      fontSize: 20, color: Colors.white))
-                          ),
-                          SizedBox( height: 18 ),
-
+                                      fontSize: 20, color: Colors.white))),
+                          SizedBox(height: 18),
                           Row(
                             children: <Widget>[
                               Text("Already have an account?",
-                                  style: GoogleFonts.lexend()
-                              ),
-
+                                  style: GoogleFonts.lexend()),
                               TextButton(
                                   onPressed: widget.toggleView,
                                   child: Text("Sign In",
                                       style: GoogleFonts.lexend(
                                         color: Color.fromARGB(255, 213, 95, 4),
-                                      ))
-                              )
+                                      )))
                             ],
                           ),
-
                         ]),
                   ),
                 ),
