@@ -1,5 +1,5 @@
+import 'package:coffeshop/services/auth.dart';
 import 'package:flutter/material.dart';
-
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -15,8 +15,8 @@ class _ProfileState extends State<Profile> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
           child: Center(
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const CircleAvatar(),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const CircleAvatar(),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 20),
             decoration: BoxDecoration(
@@ -28,7 +28,6 @@ class _ProfileState extends State<Profile> {
               "Name: user",
             ),
           ),
-
           Container(
               margin: const EdgeInsets.symmetric(vertical: 20),
               decoration: BoxDecoration(
@@ -45,9 +44,13 @@ class _ProfileState extends State<Profile> {
               ),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: const Text("Cellphone: 0987654321")),
+          ElevatedButton(
+              onPressed: () async {
+                dynamic result = await AuthService().signOut();
+              },
+              child: Text("Log out"))
         ]),
       )),
-
     );
   }
 }

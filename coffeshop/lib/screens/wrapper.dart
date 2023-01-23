@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// temp
+import 'package:coffeshop/screens/home/product.dart';
+
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});
 
@@ -13,6 +16,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
     // return UserHome();
+    // return Product();
     return user == null ? Authenticate() : UserHome();
   }
 }
