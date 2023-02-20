@@ -164,7 +164,7 @@ class _SignUpState extends State<SignUp> {
                                 if (_formKey.currentState!.validate()) {
                                   dynamic result = await AuthService()
                                       .signUp(email, password);
-                                  if (result == "null") {
+                                  if (result == null) {
                                     error = "Something gone wrong! Try again.";
                                     print("Invalid data");
                                   }

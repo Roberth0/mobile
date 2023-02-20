@@ -107,19 +107,18 @@ class _SignInState extends State<SignIn> {
                             ),
                           ),
                         ),
-
                         SizedBox(
                           height: 40,
                         ),
-
-                        if (error.isNotEmpty) ...[Center(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                            child: Text(error, style: TextStyle(color: Colors.red)),
-                          ),
-                        )],
-
-
+                        if (error.isNotEmpty) ...[
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                              child: Text(error,
+                                  style: TextStyle(color: Colors.red)),
+                            ),
+                          )
+                        ],
                         ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor:
@@ -131,15 +130,16 @@ class _SignInState extends State<SignIn> {
                                   builder: (context) {
                                     return Center(
                                         child: CircularProgressIndicator());
-                                  }
-                              );
+                                  });
 
                               if (_formKey.currentState!.validate()) {
                                 dynamic result =
                                     await _auth.signIn(email, password);
-                                if (result == "null") {
-                                  setState(() => error =
-                                      "Email and/or Password not valid");
+                                if (result == null) {
+                                  setState(() {
+                                    error = "Email and/or Password not valid";
+                                    print(error);
+                                  });
                                 }
                               }
 

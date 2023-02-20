@@ -10,31 +10,49 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          width: 120,
-          height: 210,
-          // color: Colors.blue,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(200, 156, 68, 0),
-                  borderRadius: BorderRadius.circular(15)
-                ),
-                padding: EdgeInsets.all(25),
-                child: Image.asset("images/coffe.png")
-              ),
+    return Container(
+        width: 120,
+        height: 210,
+        // color: Colors.blue,
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+              color: const Color.fromARGB(118, 156, 68, 0),
+              borderRadius: BorderRadius.circular(15)),
+              child: Column(
+                children: [
+                  Image.asset("images/coffe.png"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                        
+                      // Add button
+                      IconButton(
+                        iconSize: 24,
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_circle_outline, color: Colors.black),
+                        splashRadius: 28,
+                      ),
 
-              Text("Frapucchino"),
-              Text("\$1.50")
-            ],
-          )
-        ),
-      ),
+                      // Delete button
+                      IconButton(
+                        iconSize: 24, 
+                        onPressed: () {}, 
+                        icon: const Icon(Icons.remove_circle_outline), 
+                        splashRadius: 28,
+                      ),
+
+                    ],
+                  )
+                ],
+              )),
+
+            const SizedBox(height: 10,),
+            const Text("Frapucchino"),
+            const Text("\$1.50")
+          ],
+        )
     );
   }
 }
