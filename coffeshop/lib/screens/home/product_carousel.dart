@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffeshop/screens/home/product.dart';
 
 class ProductCarousel extends StatefulWidget {
   const ProductCarousel({super.key});
@@ -15,16 +16,18 @@ class _ProductCarouselState extends State<ProductCarousel> {
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<QuerySnapshot?>(context);
-    if (products != null) {
-      print('working');
-      products.docs.map((e) => print(e.data()));
-      // products.docs.forEach((element) {
-      //   print(element.data());
-      // });
+
+
+    List<Product>? productList() {
+      return products?.docs.map((e) => Product(
+        name: e.get('name'), 
+        price: e.get('price'), 
+        imgPath: "images/coffe.png",)).toList();
     }
-    // products?.docs.map((doc) {
-    //   print(doc.data);
-    // });
-    return Container();
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: productList()!.map((e) => Container(child: e)).toList(),
+    );
   }
 }

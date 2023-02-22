@@ -55,14 +55,17 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const ProductCarousel(),
-                Container(width: 120, height: 210, color: Colors.blue),
-                Container(width: 120, height: 210, color: Colors.pink),
-              ],
-            ),
+
+            const ProductCarousel(),
+
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     // const ProductCarousel(),
+            //     // Container(width: 120, height: 210, color: Colors.blue),
+            //     // Container(width: 120, height: 210, color: Colors.pink),
+            //   ],
+            // ),
             const SizedBox(
               height: 15,
             ),
